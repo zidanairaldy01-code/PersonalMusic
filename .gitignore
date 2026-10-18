@@ -19,3 +19,6 @@ yarn-error.log
 
 # Allow SQLite database for Vercel
 # /database/*.sqlite
+
+.vercel
+.env*
