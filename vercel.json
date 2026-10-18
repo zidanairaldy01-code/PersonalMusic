@@ -1,25 +1,15 @@
 {
   "version": 2,
+  "buildCommand": "echo 'No build needed'",
+  "outputDirectory": "public",
   "routes": [
     {
-      "src": "/",
-      "dest": "/public/index-static.html"
-    },
-    {
-      "src": "/index-static.html",
-      "dest": "/public/index-static.html"
-    },
-    {
       "src": "/storage/(.*)",
-      "dest": "/public/storage/$1"
-    },
-    {
-      "src": "/(.*\\.(html|css|js|png|jpg|jpeg|gif|svg|ico|mp3|wav|ogg|mpeg|webp))",
-      "dest": "/public/$1"
+      "dest": "/storage/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/public/index-static.html"
+      "dest": "/$1"
     }
   ]
 }

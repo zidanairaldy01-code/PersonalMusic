@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Music Collection</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f7;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            height: 600px;
+            display: flex;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin: 0 40px;
+        }
+
+        .card-left {
+            flex: 1;
+            background: #e8eef5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 60px;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .member-badge {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            background: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #2d5f8d;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-right {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .card-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #86868b;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .page-number {
+            font-size: 14px;
+            color: #86868b;
+            font-weight: 500;
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .member-type {
+            font-size: 11px;
+            font-weight: 600;
+            color: #86868b;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .name {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        .instagram {
+            font-size: 16px;
+            color: #86868b;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .divider {
+            width: 40px;
+            height: 3px;
+            background: #2d5f8d;
+            margin-bottom: 30px;
+        }
+
+        .notes {
+            font-size: 16px;
+            color: #1d1d1f;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #2d5f8d;
+            font-weight: 500;
+        }
+
+        .tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #2d5f8d;
+            border-radius: 50%;
+        }
+
+        .music-section {
+            border-top: 1px solid #e5e5e7;
+            padding-top: 24px;
+        }
+
+        .music-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .music-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .music-icon {
+            width: 44px;
+            height: 44px;
+            background: #f5f5f7;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .music-details {
+            flex: 1;
+        }
+
+        .music-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #86868b;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .music-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 2px;
+        }
+
+        .music-subtitle {
+            font-size: 13px;
+            color: #86868b;
+        }
+
+        .play-button {
+            width: 48px;
+            height: 48px;
+            background: #2d5f8d;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 20px;
+        }
+
+        .play-button:hover {
+            background: #1d4a6d;
+            transform: scale(1.05);
+        }
+
+        .play-button.playing {
+            background: #86868b;
+        }
+
+        .play-button svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .audio-player {
+            display: none;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .footer-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: #d2d2d7;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-button {
+            width: 48px;
+            height: 48px;
+            border: 1px solid #e5e5e7;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #f5f5f7;
+            border-color: #d2d2d7;
+        }
+
+        .nav-button.next {
+            background: #2d5f8d;
+            border-color: #2d5f8d;
+        }
+
+        .nav-button.next:hover {
+            background: #1d4a6d;
+        }
+
+        .nav-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-button.prev svg {
+            fill: #86868b;
+        }
+
+        .nav-button.next svg {
+            fill: white;
+        }
+
+        .swiper-pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
+
+        .swiper-pagination-bullet {
+            width: 32px;
+            height: 4px;
+            background: #d2d2d7;
+            border-radius: 2px;
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: #2d5f8d;
+            width: 48px;
+        }
+
+        @media (max-width: 1024px) {
+            .card-wrapper {
+                flex-direction: column;
+                height: auto;
+                max-width: 500px;
+                margin: 20px;
+            }
+
+            .card-left {
+                height: 400px;
+                padding: 40px;
+            }
+
+            .card-right {
+                padding: 40px;
+            }
+
+            .name {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .card-wrapper {
+                margin: 16px;
+            }
+
+            .card-left {
+                height: 300px;
+                padding: 24px;
+            }
+
+            .card-right {
+                padding: 32px 24px;
+            }
+
+            .name {
+                font-size: 32px;
+            }
+
+            .member-badge {
+                bottom: 24px;
+                left: 24px;
+                font-size: 10px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="swiper musicSwiper">
+            <div class="swiper-wrapper" id="cardsContainer"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script>
+        // DATA HARDCODED - Edit langsung di sini!
+        const musicCards = [
+            {
+                name: 'Zen Auladi',
+                instagram_username: 'zen_auladi',
+                notes: 'Bukan Orang Bener Tapi Beneran Orang.',
+                quotes: 'Dream Keep Me Alive',
+                photo_path: '/storage/photos/zen.png',
+                music_path: '/storage/music/pulang.mp3',
+                song_title: 'Pulang - 009'
+            },
+            {
+                name: 'Sarah Johnson',
+                instagram_username: 'sarahjohnson',
+                notes: 'Musik adalah bahasa universal yang menghubungkan jiwa-jiwa. Setiap nada membawa cerita yang berbeda.',
+                quotes: 'Music is life itself',
+                photo_path: '/storage/photos/image.png',
+                music_path: '/storage/music/pulang.mp3',
+                song_title: 'My Favorite Song'
+            },
+            {
+                name: 'Ahmad Rizki',
+                instagram_username: 'ahmadrizki',
+                notes: 'Melalui musik, saya menemukan diriku yang sebenarnya. Melodi adalah teman terbaik di setiap perjalanan.',
+                quotes: 'Find yourself in the rhythm',
+                photo_path: '/storage/photos/image.png',
+                music_path: '/storage/music/pulang.mp3',
+                song_title: 'Journey of Life'
+            },
+            {
+                name: 'Maya Kusuma',
+                instagram_username: 'mayakusuma',
+                notes: 'Bermusik bukan hanya hobi, tetapi cara hidup. Setiap chord membawa emosi yang mendalam.',
+                quotes: 'Dance to your own beat',
+                photo_path: '/storage/photos/image.png',
+                music_path: '/storage/music/pulang.mp3',
+                song_title: 'Dance Forever'
+            },
+            {
+                name: 'David Anderson',
+                instagram_username: 'davidanderson',
+                notes: 'Music has been my constant companion through all seasons of life. It speaks when words cannot.',
+                quotes: 'Let the music guide you',
+                photo_path: '/storage/photos/image.png',
+                music_path: '/storage/music/pulang.mp3',
+                song_title: 'Seasons of Life'
+            }
+        ];
+
+        let swiper;
+        let currentAudio = null;
+        let currentButton = null;
+
+        function loadMusicCards() {
+            const container = document.getElementById('cardsContainer');
+            
+            container.innerHTML = musicCards.map((card, index) => `
+                <div class="swiper-slide">
+                    <div class="card-wrapper">
+                        <div class="card-left">
+                            <img src="${card.photo_path}" alt="${card.name}" class="profile-photo" onerror="this.src='https://via.placeholder.com/600x800/e8eef5/2d5f8d?text=${encodeURIComponent(card.name)}'">
+                            <div class="member-badge">● MEMBER PROFILE</div>
+                        </div>
+                        
+                        <div class="card-right">
+                            <div>
+                                <div class="card-header-top">
+                                    <div class="header-title">GET TO KNOW US</div>
+                                    <div class="page-number">${String(index + 1).padStart(2, '0')} / ${String(musicCards.length).padStart(2, '0')}</div>
+                                </div>
+                                
+                                <div class="card-content">
+                                    <div class="member-type">A MEMBER OF SOLIDARITY</div>
+                                    <h1 class="name">${card.name}</h1>
+                                    <div class="instagram">@${card.instagram_username}</div>
+                                    <div class="divider"></div>
+                                    <p class="notes">${card.notes}</p>
+                                    <div class="tag">${card.quotes}</div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="music-section">
+                                    <div class="music-header">
+                                        <div class="music-info">
+                                            <div class="music-icon">🎵</div>
+                                            <div class="music-details">
+                                                <div class="music-label">PERSONAL SOUNDTRACK</div>
+                                                <div class="music-title">${card.song_title}</div>
+                                                <div class="music-subtitle">Tekan play untuk mendengarkan</div>
+                                            </div>
+                                        </div>
+                                        <button class="play-button" onclick="toggleAudio(${index})" id="play-btn-${index}">
+                                            <svg viewBox="0 0 24 24" id="play-icon-${index}">
+                                                <path d="M8 5v14l11-7z"/>
+                                            </svg>
+                                            <svg viewBox="0 0 24 24" id="pause-icon-${index}" style="display: none;">
+                                                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <audio class="audio-player" id="audio-${index}" src="${card.music_path}"></audio>
+                                </div>
+                                
+                                <div class="card-footer">
+                                    <div class="footer-text">EXPLORE OUR PEOPLE</div>
+                                    <div class="navigation">
+                                        <button class="nav-button prev" onclick="swiper.slidePrev()">
+                                            <svg viewBox="0 0 24 24">
+                                                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                                            </svg>
+                                        </button>
+                                        <button class="nav-button next" onclick="swiper.slideNext()">
+                                            <svg viewBox="0 0 24 24">
+                                                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            initializeSwiper();
+        }
+
+        function initializeSwiper() {
+            swiper = new Swiper('.musicSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                centeredSlides: true,
+                grabCursor: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                keyboard: {
+                    enabled: true,
+                },
+                on: {
+                    slideChange: function () {
+                        pauseAllAudio();
+                    }
+                }
+            });
+        }
+
+        function toggleAudio(index) {
+            const audio = document.getElementById(`audio-${index}`);
+            const button = document.getElementById(`play-btn-${index}`);
+            const playIcon = document.getElementById(`play-icon-${index}`);
+            const pauseIcon = document.getElementById(`pause-icon-${index}`);
+            
+            if (currentAudio && currentAudio !== audio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                const prevButton = currentButton;
+                const prevPlayIcon = prevButton.querySelector('[id^="play-icon"]');
+                const prevPauseIcon = prevButton.querySelector('[id^="pause-icon"]');
+                prevPlayIcon.style.display = 'block';
+                prevPauseIcon.style.display = 'none';
+                prevButton.classList.remove('playing');
+            }
+            
+            if (audio.paused) {
+                audio.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                button.classList.add('playing');
+                currentAudio = audio;
+                currentButton = button;
+            } else {
+                audio.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                button.classList.remove('playing');
+            }
+        }
+
+        function pauseAllAudio() {
+            const allAudio = document.querySelectorAll('audio');
+            const allButtons = document.querySelectorAll('.play-button');
+            
+            allAudio.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+            
+            allButtons.forEach(button => {
+                const playIcon = button.querySelector('[id^="play-icon"]');
+                const pauseIcon = button.querySelector('[id^="pause-icon"]');
+                if (playIcon && pauseIcon) {
+                    playIcon.style.display = 'block';
+                    pauseIcon.style.display = 'none';
+                }
+                button.classList.remove('playing');
+            });
+            
+            currentAudio = null;
+            currentButton = null;
+        }
+
+        document.addEventListener('DOMContentLoaded', loadMusicCards);
+    </script>
+</body>
+</html>
