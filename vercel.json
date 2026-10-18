@@ -1,14 +1,12 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "public/**",
-      "use": "@vercel/static"
-    }
-  ],
   "routes": [
     {
       "src": "/",
+      "dest": "/public/index-static.html"
+    },
+    {
+      "src": "/index-static.html",
       "dest": "/public/index-static.html"
     },
     {
@@ -16,8 +14,12 @@
       "dest": "/public/storage/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "/(.*\\.(html|css|js|png|jpg|jpeg|gif|svg|ico|mp3|wav|ogg|mpeg|webp))",
       "dest": "/public/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/index-static.html"
     }
   ]
 }
